@@ -70,26 +70,35 @@
         <button onclick="generateSquares()">Generate Squares</button>
     </div>
     <div id="squaresContainer"></div>
+
     <table id="resultsTable">
         <tr>
             <th>Order</th>
-            <th>Group Number</th>
+            <th>Clicked Number</th>
         </tr>
     </table>
 
     <script>
-        let orderCount = 0;
+        let clickOrder = 0;
 
-        function addNumberToTable(number) {
+        function addClickToTable(clickedNumber) {
             const table = document.getElementById("resultsTable");
             const row = table.insertRow();
             const cell1 = row.insertCell(0);
             const cell2 = row.insertCell(1);
-            cell1.innerHTML = ++orderCount;
-            cell2.innerHTML = number;
+            cell1.innerHTML = ++clickOrder;
+            cell2.innerHTML = clickedNumber;
+        }
+
+        function resetTable() {
+            const table = document.getElementById("resultsTable");
+            table.innerHTML = '<tr><th>Order</th><th>Clicked Number</th></tr>';
+            clickOrder = 0;
         }
 
         function generateSquares() {
+            resetTable(); // Reset the table when generating new squares
+
             const container = document.getElementById('squaresContainer');
             container.innerHTML = ''; // Clear previous squares
 
@@ -99,23 +108,10 @@
             // Shuffle numbers array
             numbers.sort(() => Math.random() - 0.5);
 
-            // Predefined set of distinct colours
             const colors = [
-                "#FF6347", // Tomato
-                "#FFD700", // Gold
-                "#4682B4", // SteelBlue
-                "#32CD32", // LimeGreen
-                "#FF69B4", // HotPink
-                "#87CEEB", // SkyBlue
-                "#DA70D6", // Orchid
-                "#FFA500", // Orange
-                "#40E0D0", // Turquoise
-                "#C71585", // MediumVioletRed
-                "#00FA9A", // MediumSpringGreen
-                "#BA55D3", // MediumOrchid
-                "#F08080", // LightCoral
-                "#20B2AA", // LightSeaGreen
-                "#FF4500", // OrangeRed
+                "#FF6347", "#FFD700", "#4682B4", "#32CD32", "#FF69B4",
+                "#87CEEB", "#DA70D6", "#FFA500", "#40E0D0", "#C71585",
+                "#00FA9A", "#BA55D3", "#F08080", "#20B2AA", "#FF4500"
             ];
 
             // Shuffle colours array
@@ -125,14 +121,13 @@
                 const square = document.createElement('div');
                 square.className = 'square';
                 square.textContent = number;
-                square.style.backgroundColor = colors[index % colors.length]; // Assign a colour from the array
+                square.style.backgroundColor = colors[index % colors.length];
 
                 square.onclick = function () {
-                    // Reveal the number and add to table
                     if (!square.classList.contains('revealed')) {
                         square.classList.add('revealed');
-                        square.style.color = 'black'; // This will ensure the number is visible
-                        addNumberToTable(number);
+                        square.style.color = 'black';
+                        addClickToTable(number);
                     }
                 };
 
