@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Group Order Race</title>
+    <style>
+        .square {
+            width: 50px;
+            height: 50px;
+            color: white;
+            text-align: center;
+            line-height: 50px;
+            position: absolute;
+            left: 0;
+        }
+
+        #raceArea {
+            position: relative;
+            width: 90%;
+            height: 400px;
+            background: #f0f0f0;
+            overflow: hidden;
+            margin: 0 auto;
+        }
+
+        table {
+            margin-top: 20px;
+            border-collapse: collapse;
+            width: 50%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        th,
+        td {
+            border: 1px solid black;
+            padding: 5px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <input type="number" id="groupCount" placeholder="Number of Groups" />
+    <button onclick="startRace()">Start Race</button>
+    <div id="raceArea"></div>
+    <table id="resultsTable">
+        <tr>
+            <th>Order</th>
+            <th>Group Number</th>
+        </tr>
+    </table>
+
+    <script>
+        const colours = ["red", "green", "blue", "yellow", "purple", "orange"];
+        let orderCount = 0;
+
+        function startRace() {
+            const groupCount = document.getElementById("groupCount").value;
+            document.getElementById("raceArea").innerHTML = '';
+            document.getElementById("resultsTable").innerHTML = '<tr><th>Order</th><th>Group Number</th></tr>';
+            orderCount = 0;
+
+            for (let i = 0; i < groupCount; i++) {
+                const square = document.createElement("div");
+                square.classList.add("square");
+                square.style.backgroundColor = colours[i % colours.length];
+                square.textContent = i + 1;
+                square.style.top = (i * 60) + 'px'; // Adjust the top position to avoid overlap
+                document.getElementById("raceArea").appendChild(square);
+                animateSquare(square, i + 1);
+            }
+        }
+
+        function animateSquare(square, groupNumber) {
+            const raceAreaWidth = document.getElementById("raceArea").offsetWidth;
+            const endPosition = raceAreaWidth - 60;
+            const duration = Math.random() * 5000 + 10000; // Random duration between 10 and 15 seconds
+
+            const move = setInterval(() => {
+                const currentLeft = parseInt(square.style.left, 10) || 0;
+                if (currentLeft < endPosition) {
+                    square.style.left = (currentLeft + 5) + 'px';
+                } else {
+                    clearInterval(move);
+                    addToTable(groupNumber);
+                }
+            }, duration / (endPosition / 5));
+        }
+
+        function addToTable(groupNumber) {
+            const table = document.getElementById("resultsTable");
+            const row = table.insertRow();
+            const cell1 = row.insertCell(0);
+            const cell2 = row.insertCell(1);
+            cell1.innerHTML = ++orderCount;
+            cell2.innerHTML = groupNumber;
+        }
+    </script>
+</body>
+
+</html>

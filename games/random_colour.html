@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Group Order Selection</title>
+    <style>
+        #squaresContainer {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin: 50px;
+        }
+
+        .square {
+            width: 150px;
+            /* Adjust size as necessary */
+            height: 150px;
+            /* Adjust size as necessary */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #ddd;
+            color: transparent;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .square.revealed {
+            color: black;
+            /* Ensuring the text color contrasts well with lighter backgrounds */
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .centred-content {
+            display: flex;
+            justify-content: center;
+        }
+
+        #numberInput {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Jordan's Group Selection Tool</h1>
+    <div class="centred-content">
+        <input type="number" id="numberInput" placeholder="Enter number of squares">
+        <button onclick="generateSquares()">Generate Squares</button>
+    </div>
+    <div id="squaresContainer"></div>
+
+    <script>
+        function generateSquares() {
+            const container = document.getElementById('squaresContainer');
+            container.innerHTML = ''; // Clear previous squares
+
+            const count = parseInt(document.getElementById('numberInput').value, 10);
+            const numbers = Array.from({ length: count }, (_, i) => i + 1);
+
+            // Shuffle numbers array
+            numbers.sort(() => Math.random() - 0.5);
+
+            // Predefined set of distinct colours
+            const colors = [
+                "#FF6347", // Tomato
+                "#FFD700", // Gold
+                "#4682B4", // SteelBlue
+                "#32CD32", // LimeGreen
+                "#FF69B4", // HotPink
+                "#87CEEB", // SkyBlue
+                "#DA70D6", // Orchid
+                "#FFA500", // Orange
+                "#40E0D0", // Turquoise
+                "#C71585", // MediumVioletRed
+                "#00FA9A", // MediumSpringGreen
+                "#BA55D3", // MediumOrchid
+                "#F08080", // LightCoral
+                "#20B2AA", // LightSeaGreen
+                "#FF4500", // OrangeRed
+            ];
+
+            // Shuffle colours array
+            colors.sort(() => Math.random() - 0.5);
+
+            numbers.forEach((number, index) => {
+                const square = document.createElement('div');
+                square.className = 'square';
+                square.textContent = number;
+                square.style.backgroundColor = colors[index % colors.length]; // Assign a colour from the array
+
+                square.onclick = function () {
+                    // Reveal the number
+                    if (square.classList.contains('revealed')) {
+                        square.classList.remove('revealed');
+                        square.style.color = 'transparent';
+                    } else {
+                        square.classList.add('revealed');
+                        square.style.color = 'black'; // This will ensure the number is visible
+                    }
+                };
+
+                container.appendChild(square);
+            });
+        }
+    </script>
+</body>
+
+</html>
