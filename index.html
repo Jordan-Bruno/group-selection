@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Jordan's Game Catalogue</title>
+    <title>Game Catalogue</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -12,20 +12,26 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
+            overflow: hidden;
         }
 
         .container {
             width: 80%;
             max-width: 1200px;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            height: 90%;
+            /* Adjusted for container height */
+            align-items: stretch;
+            /* Changed to stretch for equal height columns */
         }
 
         .game-list {
             width: 40%;
             list-style-type: none;
             padding: 0;
+            overflow-y: auto;
+            /* Added for scrollable list if needed */
+            margin: 0;
         }
 
         .game-list li {
@@ -38,33 +44,45 @@
         }
 
         .image {
-            width: 40%;
+            width: 60%;
+            /* Adjusted for better layout */
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        .game-image img {
-            width: 100%;
+        .image img {
+            max-height: 100%;
+            /* Scales image to fit screen height */
+            max-width: 100%;
+            /* Ensures image does not exceed its container's width */
             height: auto;
+            width: auto;
         }
 
         h1 {
             text-align: center;
             width: 100%;
-            margin-bottom: 50px;
+            margin-bottom: 20px;
+            /* Adjusted margin */
+            position: absolute;
+            top: 0;
         }
     </style>
 </head>
 
 <body>
+    <h1>My Game Catalogue</h1>
     <div class="container">
-        <h1>Jordan's Game Catalogue</h1>
         <ul class="game-list">
-            <li><a href="games/random_colour.html">Random Colour</a></li>
-            <li><a href="games/race.html">Race</a></li>
-            <!-- <li><a href="game3.html">Game 3</a></li> -->
+            <li><a href="game1.html">Game 1</a></li>
+            <li><a href="game2.html">Game 2</a></li>
+            <li><a href="game3.html">Game 3</a></li>
             <!-- Add more games as needed -->
         </ul>
         <div class="image">
-            <img src="images/subaru.jpg" alt="Image of Subaru Natsuki" />
+            <img src="placeholder-image.jpg" alt="Game Image" />
+            <!-- Replace with actual game image -->
         </div>
     </div>
 </body>
