@@ -46,18 +46,49 @@
         #numberInput {
             margin-right: 10px;
         }
+
+        table {
+            margin-top: 20px;
+            border-collapse: collapse;
+            width: 50%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        th,
+        td {
+            border: 1px solid black;
+            padding: 5px;
+            text-align: center;
+        }
     </style>
 </head>
 
 <body>
-    <h1>Jordan's Group Selection Tool</h1>
     <div class="centred-content">
-        <input type="number" id="numberInput" placeholder="Enter number of squares">
+        <input type="number" id="numberInput" placeholder="Enter number of groups">
         <button onclick="generateSquares()">Generate Squares</button>
     </div>
     <div id="squaresContainer"></div>
+    <table id="resultsTable">
+        <tr>
+            <th>Order</th>
+            <th>Group Number</th>
+        </tr>
+    </table>
 
     <script>
+        let orderCount = 0;
+
+        function addNumberToTable(number) {
+            const table = document.getElementById("resultsTable");
+            const row = table.insertRow();
+            const cell1 = row.insertCell(0);
+            const cell2 = row.insertCell(1);
+            cell1.innerHTML = ++orderCount;
+            cell2.innerHTML = number;
+        }
+
         function generateSquares() {
             const container = document.getElementById('squaresContainer');
             container.innerHTML = ''; // Clear previous squares
@@ -97,13 +128,11 @@
                 square.style.backgroundColor = colors[index % colors.length]; // Assign a colour from the array
 
                 square.onclick = function () {
-                    // Reveal the number
-                    if (square.classList.contains('revealed')) {
-                        square.classList.remove('revealed');
-                        square.style.color = 'transparent';
-                    } else {
+                    // Reveal the number and add to table
+                    if (!square.classList.contains('revealed')) {
                         square.classList.add('revealed');
                         square.style.color = 'black'; // This will ensure the number is visible
+                        addNumberToTable(number);
                     }
                 };
 

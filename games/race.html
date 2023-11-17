@@ -17,10 +17,10 @@
         #raceArea {
             position: relative;
             width: 90%;
-            height: 400px;
+            height: 600px;
             background: #f0f0f0;
             overflow: hidden;
-            margin: 0 auto;
+            margin: 20px auto;
         }
 
         table {
@@ -37,12 +37,23 @@
             padding: 5px;
             text-align: center;
         }
+
+        .centred-content {
+            display: flex;
+            justify-content: center;
+        }
+
+        #groupCount {
+            margin-right: 10px;
+        }
     </style>
 </head>
 
 <body>
-    <input type="number" id="groupCount" placeholder="Number of Groups" />
-    <button onclick="startRace()">Start Race</button>
+    <div class="centred-content">
+        <input type="number" id="groupCount" placeholder="Enter number of groups" />
+        <button onclick="startRace()">Start Race</button>
+    </div>
     <div id="raceArea"></div>
     <table id="resultsTable">
         <tr>
@@ -52,7 +63,7 @@
     </table>
 
     <script>
-        const colours = ["red", "green", "blue", "yellow", "purple", "orange"];
+        const colours = ["red", "green", "blue", "chocolate", "purple", "orange"];
         let orderCount = 0;
 
         function startRace() {
