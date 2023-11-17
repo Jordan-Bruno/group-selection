@@ -2,35 +2,34 @@
 <html>
 
 <head>
-    <title>Game Catalogue</title>
+    <title>Jordan's Game Catalogue</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             height: 100vh;
             overflow: hidden;
         }
 
-        .container {
-            width: 80%;
-            max-width: 1200px;
+        .banner {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .content {
             display: flex;
-            height: 90%;
-            /* Adjusted for container height */
-            align-items: stretch;
-            /* Changed to stretch for equal height columns */
+            height: calc(100% - 60px);
+            /* Adjust height to take banner into account */
+            margin: 25px 10%;
         }
 
         .game-list {
-            width: 40%;
+            width: 50%;
             list-style-type: none;
-            padding: 0;
+            padding: 20px;
             overflow-y: auto;
-            /* Added for scrollable list if needed */
+            /* Scrollable list */
             margin: 0;
         }
 
@@ -44,45 +43,33 @@
         }
 
         .image {
-            width: 60%;
-            /* Adjusted for better layout */
+            width: 50%;
             display: flex;
-            justify-content: center;
             align-items: center;
+            justify-content: right;
         }
 
         .image img {
             max-height: 100%;
-            /* Scales image to fit screen height */
             max-width: 100%;
-            /* Ensures image does not exceed its container's width */
             height: auto;
             width: auto;
-        }
-
-        h1 {
-            text-align: center;
-            width: 100%;
-            margin-bottom: 20px;
-            /* Adjusted margin */
-            position: absolute;
-            top: 0;
         }
     </style>
 </head>
 
 <body>
-    <h1>My Game Catalogue</h1>
-    <div class="container">
+    <div class="banner">
+        <h1>Jordan's Game Catalogue</h1>
+    </div>
+    <div class="content">
         <ul class="game-list">
-            <li><a href="game1.html">Game 1</a></li>
-            <li><a href="game2.html">Game 2</a></li>
-            <li><a href="game3.html">Game 3</a></li>
-            <!-- Add more games as needed -->
+            <li><a href="games/random_colour.html">Random Colour</a></li>
+            <li><a href="games/race.html">Race</a></li>
+            <!-- <li><a href="game3.html">Game 3</a></li> -->
         </ul>
         <div class="image">
-            <img src="placeholder-image.jpg" alt="Game Image" />
-            <!-- Replace with actual game image -->
+            <img src="images/subaru.jpg" alt="Game Image" />
         </div>
     </div>
 </body>
