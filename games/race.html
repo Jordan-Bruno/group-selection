@@ -59,25 +59,28 @@
         <tr>
             <th>Order</th>
             <th>Group Number</th>
+            <th>Time (ms)</th>
         </tr>
     </table>
 
     <script>
         const colours = ["red", "green", "blue", "chocolate", "purple", "orange"];
         let orderCount = 0;
+        let startTime;
 
         function startRace() {
             const groupCount = document.getElementById("groupCount").value;
             document.getElementById("raceArea").innerHTML = '';
-            document.getElementById("resultsTable").innerHTML = '<tr><th>Order</th><th>Group Number</th></tr>';
+            document.getElementById("resultsTable").innerHTML = '<tr><th>Order</th><th>Group Number</th><th>Time (ms)</th></tr>';
             orderCount = 0;
+            startTime = new Date().getTime();
 
             for (let i = 0; i < groupCount; i++) {
                 const square = document.createElement("div");
                 square.classList.add("square");
                 square.style.backgroundColor = colours[i % colours.length];
                 square.textContent = i + 1;
-                square.style.top = (i * 60) + 'px'; // Adjust the top position to avoid overlap
+                square.style.top = (i * 60) + 'px';
                 document.getElementById("raceArea").appendChild(square);
                 animateSquare(square, i + 1);
             }
@@ -86,26 +89,31 @@
         function animateSquare(square, groupNumber) {
             const raceAreaWidth = document.getElementById("raceArea").offsetWidth;
             const endPosition = raceAreaWidth - 60;
-            const duration = Math.random() * 5000 + 10000; // Random duration between 10 and 15 seconds
+            let progress = 0; // Represents the progress of the square
 
             const move = setInterval(() => {
-                const currentLeft = parseInt(square.style.left, 10) || 0;
-                if (currentLeft < endPosition) {
-                    square.style.left = (currentLeft + 5) + 'px';
+                if (progress < endPosition) {
+                    const movement = Math.random() * 10 + 1; // Random movement between 1 and 10 pixels
+                    progress += movement;
+                    square.style.left = Math.min(progress, endPosition) + 'px'; // Update position, but don't exceed endPosition
                 } else {
                     clearInterval(move);
-                    addToTable(groupNumber);
+                    const endTime = new Date().getTime();
+                    addToTable(groupNumber, endTime - startTime);
                 }
-            }, duration / (endPosition / 5));
+            }, 50); // Update every 50 milliseconds
         }
 
-        function addToTable(groupNumber) {
+
+        function addToTable(groupNumber, time) {
             const table = document.getElementById("resultsTable");
             const row = table.insertRow();
             const cell1 = row.insertCell(0);
             const cell2 = row.insertCell(1);
+            const cell3 = row.insertCell(2);
             cell1.innerHTML = ++orderCount;
             cell2.innerHTML = groupNumber;
+            cell3.innerHTML = time;
         }
     </script>
 </body>
