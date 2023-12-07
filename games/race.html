@@ -12,6 +12,10 @@
             line-height: 50px;
             position: absolute;
             left: 0;
+            font-size: 20px;
+            /* Increased font size */
+            font-weight: bold;
+            /* Made text bold */
         }
 
         #raceArea {
@@ -46,14 +50,22 @@
         #groupCount {
             margin-right: 10px;
         }
+
+        #countdown {
+            font-size: 30px;
+            font-weight: bold;
+            margin-top: 10px;
+            text-align: center;
+        }
     </style>
 </head>
 
 <body>
     <div class="centred-content">
         <input type="number" id="groupCount" placeholder="Enter number of groups" />
-        <button onclick="startRace()">Start Race</button>
+        <button onclick="prepareRace()">Start Race</button>
     </div>
+    <div id="countdown"></div>
     <div id="raceArea"></div>
     <table id="resultsTable">
         <tr>
@@ -68,20 +80,45 @@
         let orderCount = 0;
         let startTime;
 
-        function startRace() {
+        function prepareRace() {
             const groupCount = document.getElementById("groupCount").value;
             document.getElementById("raceArea").innerHTML = '';
             document.getElementById("resultsTable").innerHTML = '<tr><th>Order</th><th>Group Number</th><th>Time (ms)</th></tr>';
             orderCount = 0;
+            displayCountdown(groupCount);
+        }
+
+        function displayCountdown(groupCount) {
+            let countdown = 3;
+            document.getElementById("countdown").innerHTML = countdown;
+            const countdownTimer = setInterval(() => {
+                countdown--;
+                document.getElementById("countdown").innerHTML = countdown;
+                if (countdown <= 0) {
+                    clearInterval(countdownTimer);
+                    document.getElementById("countdown").innerHTML = '';
+                    startRace(groupCount);
+                }
+            }, 1000);
+        }
+
+        function startRace(groupCount) {
             startTime = new Date().getTime();
+            const raceArea = document.getElementById("raceArea");
+            raceArea.innerHTML = '';
+
+            // Calculate and set the height of the race area based on the number of groups
+            const squareHeight = 60; // Height of each square plus some margin
+            const raceAreaHeight = squareHeight * groupCount;
+            raceArea.style.height = raceAreaHeight + 'px';
 
             for (let i = 0; i < groupCount; i++) {
                 const square = document.createElement("div");
                 square.classList.add("square");
                 square.style.backgroundColor = colours[i % colours.length];
                 square.textContent = i + 1;
-                square.style.top = (i * 60) + 'px';
-                document.getElementById("raceArea").appendChild(square);
+                square.style.top = (i * squareHeight) + 'px';
+                raceArea.appendChild(square);
                 animateSquare(square, i + 1);
             }
         }
